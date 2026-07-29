@@ -35,13 +35,17 @@
 
         <div class="inputGroup">
 
-            <label>音楽ID</label>
+            <label>音楽条件</label><br>
 
-            <input
-                id="musicId"
-                type="text"
-                autocomplete="off"
-            >
+            <select id="musicSelect">
+
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="silence">無音</option>
+
+            </select>
 
         </div>
 
@@ -206,6 +210,8 @@
     <script src="builder.js"></script>
     <script src="csv.js"></script>
     <script src="game.js"></script>
+
+    <audio id="experimentAudio"></audio>
 
 </body>
 
