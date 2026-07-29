@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>集中力測定実験</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- スタート画面 -->
+    <div id="startScreen">
+
+        <h1>集中力測定実験</h1>
+        <h2>できるだけ速く、正確に解いてください。</h2>
+
+        <div class="inputGroup">
+
+            <label>被験者名</label>
+
+            <input
+                id="participantName"
+                type="text"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="inputGroup">
+
+            <label>音楽ID</label>
+
+            <input
+                id="musicId"
+                type="text"
+                autocomplete="off"
+            >
+
+        </div>
+
+        <button id="startButton">
+            START
+        </button>
+
+    </div>
+
+    <!-- カウントダウン -->
+    <div id="countdown" class="hidden">
+        3
+    </div>
+
+    <!-- ゲーム画面 -->
+    <div id="gameScreen" class="hidden">
+
+        <!-- 上部情報 -->
+
+        <div id="topBar">
+
+            <div id="timer">
+                50.0
+            </div>
+
+        </div>
+
+        <!-- 左右画面 -->
+
+        <div id="container">
+
+            <!-- 左 -->
+
+            <div class="panel">
+
+                <div
+                    id="leftQuestion"
+                    class="question">
+                </div>
+
+                <button
+                    id="leftChoice0"
+                    class="choice">
+                </button>
+
+                <button
+                    id="leftChoice1"
+                    class="choice">
+                </button>
+
+                <button
+                    id="leftChoice2"
+                    class="choice">
+                </button>
+
+            </div>
+
+            <!-- 右 -->
+
+            <div class="panel">
+
+                <div
+                    id="rightQuestion"
+                    class="question">
+                </div>
+
+                <button
+                    id="rightChoice0"
+                    class="choice">
+                </button>
+
+                <button
+                    id="rightChoice1"
+                    class="choice">
+                </button>
+
+                <button
+                    id="rightChoice2"
+                    class="choice">
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 終了画面 -->
+
+    <div id="resultScreen" class="hidden">
+
+        <h2>実験終了</h2>
+
+        <div class="resultContainer">
+
+            <div class="resultBox">
+
+                <h3>左画面</h3>
+
+                <p>
+                    正答数：
+                    <span id="finalLeftScore"></span>
+                </p>
+
+                <p>
+                    平均反応時間：
+                    <span id="finalLeftReaction"></span>
+                    ms
+                </p>
+
+                <p>
+                    誤答数：
+                    <span id="finalLeftMiss"></span>
+                    回
+                </p>
+
+            </div>
+
+            
+            <div class="resultBox">
+
+                <h3>右画面</h3>
+
+                <p>
+                    正答数：
+                    <span id="finalRightScore"></span>
+                    問
+                </p>
+
+                <p>
+                    平均反応時間：
+                    <span id="finalRightReaction"></span>
+                    ms
+                </p>
+
+                <p>
+                    誤答数：
+                    <span id="finalRightMiss"></span>
+                    回
+                </p>
+
+            </div>
+        </div>
+
+        <p>
+
+            CSVを保存して下さい。
+
+        </p>
+
+        <button id="downloadCSV">
+
+            CSV保存
+
+        </button>
+
+    </div>
+
+    <!-- JavaScript -->
+
+    <script src="database.js"></script>
+    <script src="builder.js"></script>
+    <script src="csv.js"></script>
+    <script src="game.js"></script>
+
+</body>
+
+</html>

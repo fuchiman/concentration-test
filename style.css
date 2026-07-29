@@ -1,0 +1,566 @@
+/* =========================================
+   全体
+========================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:sans-serif;
+
+    background:#f5f5f5;
+
+    overflow:hidden;
+
+    user-select:none;
+
+}
+
+/* =========================================
+   非表示
+========================================= */
+
+.hidden{
+
+    display:none;
+
+}
+
+/* =========================================
+   スタート画面
+========================================= */
+
+/* =========================================
+   スタート画面
+========================================= */
+
+#startScreen{
+
+    width:100vw;
+    height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5f7fa,
+            #e4e8ef
+        );
+
+}
+
+
+/* タイトル */
+
+#startScreen h1{
+
+    font-size:48px;
+
+    margin-bottom:50px;
+
+    letter-spacing:3px;
+
+    color:#333;
+
+}
+
+#startScreen h2{
+
+    font-size:22px;
+
+    margin-bottom:50px;
+
+    letter-spacing:3px;
+
+    color:#333;
+
+}
+
+/* 入力欄 */
+
+#startScreen input{
+
+    width:350px;
+
+    height:55px;
+
+    margin-top:10px;
+
+    padding:0 20px;
+
+    font-size:22px;
+
+    border:
+
+        2px solid #aaa;
+
+    border-radius:12px;
+
+    outline:none;
+
+    background:white;
+
+    transition:0.2s;
+
+}
+
+
+#startScreen input:focus{
+
+    border-color:#4a90e2;
+
+    box-shadow:
+
+        0 0 8px rgba(74,144,226,0.4);
+
+}
+
+
+/* ラベル */
+
+#startScreen label{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:#444;
+
+}
+
+.inputGroup{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    margin-bottom:20px;
+
+}
+
+/* STARTボタン */
+
+#startButton{
+
+    margin-top:40px;
+
+    width:250px;
+
+    height:75px;
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    color:white;
+
+    background:#333;
+
+    border:none;
+
+    border-radius:15px;
+
+    cursor:pointer;
+
+    transition:0.2s;
+
+}
+
+
+#startButton:hover{
+
+    background:#555;
+
+    transform:scale(1.05);
+
+}
+
+
+#startButton:active{
+
+    transform:scale(0.98);
+
+}
+
+#startButton{
+
+    font-size:32px;
+
+    padding:20px 60px;
+
+    cursor:pointer;
+
+}
+
+/* =========================================
+   カウントダウン
+========================================= */
+
+#countdown{
+
+    width:100vw;
+    height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:120px;
+
+    font-weight:bold;
+
+}
+
+/* =========================================
+   ゲーム画面
+========================================= */
+
+#gameScreen{
+
+    width:100vw;
+    height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+/* =========================================
+   上部
+========================================= */
+
+#topBar{
+
+    height:70px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 40px;
+
+    border-bottom:2px solid #999;
+
+    background:white;
+
+}
+
+#timer{
+
+    font-size:36px;
+
+    font-weight:bold;
+
+}
+
+/* #score{
+
+    font-size:24px;
+
+} */
+
+/* =========================================
+   左右画面
+========================================= */
+
+#container{
+
+    flex:1;
+
+    display:flex;
+
+}
+
+/* =========================================
+   パネル
+========================================= */
+
+.panel{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:flex-start;
+
+    border:1px solid #888;
+
+}
+
+/* =========================================
+   問題
+========================================= */
+
+.question{
+
+    margin-top:70px;
+
+    font-size:60px;
+
+    font-weight:bold;
+
+}
+
+/* =========================================
+   選択肢
+========================================= */
+
+.choice{
+
+    width:220px;
+
+    height:80px;
+
+    margin-top:30px;
+
+    font-size:36px;
+
+    cursor:pointer;
+
+}
+
+/* =========================================
+   終了画面
+========================================= */
+
+/* 結果2つをまとめる */
+
+.resultContainer{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:3vw;
+
+    width:100%;
+
+}
+
+#resultScreen{
+
+    width:100vw;
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5f7fa,
+            #e4e8ef
+        );
+
+    overflow:auto;
+
+}
+
+
+/* 終了タイトル */
+
+#resultScreen h2{
+
+    font-size:clamp(32px,5vw,48px);
+
+    letter-spacing:3px;
+
+    color:#333;
+
+    margin-bottom:3vh;
+
+}
+
+
+/* スコア表示 */
+
+#resultScreen p{
+
+    width:420px;
+
+    padding:20px 30px;
+
+    margin:10px;
+
+    background:white;
+
+    border-radius:15px;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.1);
+
+    font-size:26px;
+
+    font-weight:bold;
+
+    color:#444;
+
+    text-align:center;
+
+}
+
+
+/* CSV説明 */
+
+#resultScreen > p{
+
+    margin-top:3vh;
+
+    font-size:clamp(14px,2vw,20px);
+
+    font-weight:normal;
+
+}
+
+/* 結果カード */
+
+.resultBox{
+
+    width:min(38vw,420px);
+
+    padding:clamp(15px,3vw,30px);
+
+    background:white;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.12);
+
+}
+
+/* 左画面・右画面 */
+
+.resultBox h3{
+
+    text-align:center;
+
+    font-size:clamp(22px,3vw,30px);
+
+    margin-bottom:15px;
+
+    color:#333;
+
+}
+
+/* 数値 */
+
+.resultBox p{
+
+    width:auto !important;
+
+    padding:8px !important;
+
+    margin:5px !important;
+
+    background:none !important;
+
+    box-shadow:none !important;
+
+    font-size:clamp(16px,2vw,22px) !important;
+
+    text-align:center;
+
+}
+
+/* 狭い画面 */
+
+@media(max-width:700px){
+
+    .resultContainer{
+
+        flex-direction:column;
+
+        gap:15px;
+
+    }
+
+
+    .resultBox{
+
+        width:min(90vw,420px);
+
+    }
+
+}
+
+/* CSVボタン */
+
+#downloadCSV{
+
+    margin-top:2vh;
+
+    width:min(260px,60vw);
+
+    height:60px;
+
+    font-size:clamp(20px,3vw,26px);
+
+    font-weight:bold;
+
+    color:white;
+
+    background:#333;
+
+    border:none;
+
+    border-radius:15px;
+
+    cursor:pointer;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+#downloadCSV:hover{
+
+    background:#555;
+
+    transform:scale(1.05);
+
+}
+
+
+#downloadCSV:active{
+
+    transform:scale(0.98);
+
+}
+
+/* hiddenを最優先にする */
+.hidden{
+    display:none !important;
+}
