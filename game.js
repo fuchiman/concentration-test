@@ -196,6 +196,9 @@ function startGame() {
 
     gameScreen.classList.remove("hidden");
 
+    // 音楽開始
+    playMusic();
+
     // 最初の問題を表示
     showQuestion("left");
     showQuestion("right");
@@ -245,6 +248,12 @@ function finishGame() {
     gameScreen.classList.add("hidden");
 
     resultScreen.classList.remove("hidden");
+
+    const audio =
+    document.getElementById("experimentAudio");
+
+    audio.pause();
+    audio.currentTime = 0;
 
     // 左右データ取得
 
@@ -337,7 +346,7 @@ startButton.addEventListener("click", () => {
         document.getElementById("participantName").value.trim();
 
     musicId =
-        document.getElementById("musicId").value.trim();
+        document.getElementById("musicSelect").value;
 
     if(participantName === ""){
 
@@ -346,12 +355,12 @@ startButton.addEventListener("click", () => {
 
     }
 
-    if(musicId === ""){
+    // if(musicId === ""){
 
-        alert("音楽IDを入力してください。");
-        return;
+    //     alert("音楽IDを入力してください。");
+    //     return;
 
-    }
+    // }
 
     startCountdown();
 
@@ -541,6 +550,29 @@ for(let i=0;i<3;i++){
         answer("right",i);
 
     });
+
+}
+
+function playMusic(){
+
+    const audio =
+        document.getElementById("experimentAudio");
+
+
+    if(musicId === "silence"){
+
+        return;
+
+    }
+
+
+    audio.src =
+        "audio/" + musicId + ".mp3";
+
+
+    audio.currentTime = 0;
+
+    audio.play();
 
 }
 
