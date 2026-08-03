@@ -501,6 +501,12 @@ body{
 
 }
 
+#resultScreen > #NameAndId{
+
+    margin-bottom:2vh;
+
+}
+
 /* 結果カード */
 
 .resultBox{
