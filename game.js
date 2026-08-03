@@ -89,7 +89,7 @@ let trialNumber = 1;
 // タイマー
 // =========================================
 
-let timeLimit = 3;
+let timeLimit = 50;
 
 let startTime = 0;
 
