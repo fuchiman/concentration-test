@@ -7,6 +7,13 @@
 
 let participantName = "";
 let musicId = "";
+const musicName = {
+    A: "A",
+    B: "B",
+    C: "C",
+    D: "D",
+    silence: "無音"
+};
 
 // 画面
 const startScreen = document.getElementById("startScreen");
@@ -82,7 +89,7 @@ let trialNumber = 1;
 // タイマー
 // =========================================
 
-let timeLimit = 50;
+let timeLimit = 3;
 
 let startTime = 0;
 
@@ -305,9 +312,13 @@ function finishGame() {
 
     // 表示
 
+    document.getElementById("resultParticipantName").textContent = participantName;
+
+    document.getElementById("resultMusicId").textContent = musicName[musicId];
+
+
     document.getElementById("finalLeftScore")
     .textContent = leftCorrect;
-
 
     document.getElementById("finalRightScore")
     .textContent = rightCorrect;
@@ -317,7 +328,6 @@ function finishGame() {
     .textContent =
         leftAverageReaction;
 
-
     document.getElementById("finalRightReaction")
     .textContent =
         rightAverageReaction;
@@ -326,7 +336,6 @@ function finishGame() {
     document.getElementById("finalLeftMiss")
     .textContent =
         leftMiss;
-
 
     document.getElementById("finalRightMiss")
     .textContent =
