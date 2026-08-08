@@ -77,6 +77,8 @@ function exportCSV() {
         participantName
         + "_"
         + musicId
+        + "_Set"
+        + setNumber
         + "_" +
         now.getFullYear() +
         String(now.getMonth()+1).padStart(2,"0") +
