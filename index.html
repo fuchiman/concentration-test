@@ -17,41 +17,65 @@
     <!-- スタート画面 -->
     <div id="startScreen">
 
-        <h1>集中力測定実験</h1>
-        <h2>できるだけ速く、正確に解いてください。</h2>
+        <div class="startCard">
 
-        <div class="inputGroup">
+            <h1>集中力測定実験</h1>
+            <h2>できるだけ速く、正確に解いてください。</h2>
 
-            <label>被験者名</label>
+            <div class="formGroup">
 
-            <input
-                id="participantName"
-                type="text"
-                autocomplete="off"
-            >
+                <label for="participantName">
+                    被験者名
+                </label>
+
+                <input
+                    id="participantName"
+                    type="text"
+                    autocomplete="off"
+                >
+
+            </div>
+
+            <div class="formGroup">
+
+                <label for="musicSelect">
+                    音楽条件
+                </label>
+
+                <select id="musicSelect">
+
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="silence">無音</option>
+
+                </select>
+
+            </div>
+
+            <div class="formGroup">
+
+                <label for="setNumber">
+                    セット番号
+                </label>
+
+                <input
+                    id="setNumber"
+                    type="number"
+                    min="1"
+                    value="1"
+                >
+
+            </div>
+
+            <button id="startButton">
+
+                START
+
+            </button>
 
         </div>
-
-
-        <div class="inputGroup">
-
-            <label>音楽条件</label><br>
-
-            <select id="musicSelect">
-
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="silence">無音</option>
-
-            </select>
-
-        </div>
-
-        <button id="startButton">
-            START
-        </button>
 
     </div>
 
@@ -145,6 +169,10 @@
             </h4>
             <h4>音楽条件：
                 <span id="resultMusicId"></span>
+            </h4>
+            <h4>
+                セット番号：
+                <span id="resultSetNumber"></span>
             </h4>
         </div>
 
