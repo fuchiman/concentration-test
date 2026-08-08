@@ -14,6 +14,7 @@ const musicName = {
     D: "D",
     silence: "無音"
 };
+let setNumber = 1;
 
 // 画面
 const startScreen = document.getElementById("startScreen");
@@ -89,7 +90,7 @@ let trialNumber = 1;
 // タイマー
 // =========================================
 
-let timeLimit = 50;
+let timeLimit = 1;
 
 let startTime = 0;
 
@@ -316,6 +317,9 @@ function finishGame() {
 
     document.getElementById("resultMusicId").textContent = musicName[musicId];
 
+    document.getElementById("resultSetNumber").textContent =
+    setNumber;
+
 
     document.getElementById("finalLeftScore")
     .textContent = leftCorrect;
@@ -357,6 +361,11 @@ startButton.addEventListener("click", () => {
     musicId =
         document.getElementById("musicSelect").value;
 
+    setNumber =
+    Number(
+        document.getElementById("setNumber").value
+    );
+
     if(participantName === ""){
 
         alert("被験者名を入力してください。");
@@ -364,12 +373,13 @@ startButton.addEventListener("click", () => {
 
     }
 
-    // if(musicId === ""){
+    if(setNumber < 1 || !Number.isInteger(setNumber)){
 
-    //     alert("音楽IDを入力してください。");
-    //     return;
+    alert("セット番号を入力してください。");
 
-    // }
+    return;
+
+    }
 
     startCountdown();
 
