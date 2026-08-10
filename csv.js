@@ -6,7 +6,8 @@ function exportCSV() {
 
     const headers = [
 
-        "participantName",
+        "deviceId",
+        //"participantName",
         "musicId",
         "trial",
         "side",
@@ -20,7 +21,9 @@ function exportCSV() {
         "reactionTime",
         "mistakeCount",
         "mistakeHistory",
-        "timestamp"
+        "timestamp",
+        "date",
+        "time"
 
     ];
 
@@ -32,7 +35,8 @@ function exportCSV() {
 
         rows.push([
 
-            record.participantName,
+            record.deviceId,
+            //record.participantName,
             record.musicId,
             record.trial,
             record.side,
@@ -46,7 +50,9 @@ function exportCSV() {
             record.reactionTime,
             record.mistakeCount,
             record.mistakeHistory,
-            record.timestamp
+            record.timestamp,
+            record.date,
+            record.time
 
         ]
         .map(escapeCSV)
@@ -74,7 +80,8 @@ function exportCSV() {
     const now = new Date();
 
     const fileName =
-        participantName
+        //participantName
+        deviceId
         + "_"
         + musicId
         + "_Set"
