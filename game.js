@@ -5,8 +5,14 @@
 
 // ---------- DOM ----------
 
-let participantName = "";
-let musicId = "";
+// 被験者名は使用しない
+//let participantName = "";
+
+// =========================================
+// 実験設定
+// =========================================
+
+// 音楽条件
 const musicName = {
     A: "A",
     B: "B",
@@ -14,13 +20,215 @@ const musicName = {
     D: "D",
     silence: "無音"
 };
-let setNumber = 1;
+
+const musicConditions = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "silence"
+];
+
+function shuffleArray(array) {
+
+    const shuffled = [...array];
+
+    for (
+        let i = shuffled.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            shuffled[i],
+            shuffled[j]
+        ] = [
+            shuffled[j],
+            shuffled[i]
+        ];
+    }
+
+    return shuffled;
+}
+
+let conditionIndex =
+    Number(localStorage.getItem("conditionIndex"));
+
+if (
+    !Number.isInteger(conditionIndex) ||
+    conditionIndex < 0 ||
+    conditionIndex >= 5
+) {
+    conditionIndex = 0;
+
+    localStorage.setItem(
+        "conditionIndex",
+        conditionIndex
+    );
+}
+
+let conditionOrder =
+    JSON.parse(
+        localStorage.getItem("conditionOrder")
+    );
+
+if (
+    !Array.isArray(conditionOrder) ||
+    conditionOrder.length !== 5
+) {
+
+    conditionOrder =
+        shuffleArray(musicConditions);
+
+    localStorage.setItem(
+        "conditionOrder",
+        JSON.stringify(conditionOrder)
+    );
+
+}
+
+let musicId = conditionOrder[conditionIndex];
+
+// セット番号
+let setNumber =
+    Number(
+        localStorage.getItem("setNumber")
+    );
+
+if (!setNumber || setNumber < 1) {
+
+    setNumber = 1;
+
+    localStorage.setItem(
+        "setNumber",
+        setNumber
+    );
+
+}
+
+document.getElementById("setDisplay")
+    .textContent =
+    `セット数：${setNumber}`;
+
+console.log(musicId);
+console.log(conditionOrder);
+console.log(conditionIndex);
+console.log(setNumber);
+
+// =========================================
+// 条件確認ボタン
+// =========================================
+
+const conditionCheckButton =
+    document.getElementById("conditionCheckButton");
+
+const conditionInfo =
+    document.getElementById("conditionInfo");
+
+const conditionText =
+    document.getElementById("conditionText");
+
+
+conditionCheckButton.addEventListener("click", () => {
+
+    const currentMusic = musicName[musicId];
+
+    conditionText.textContent = currentMusic;
+
+    conditionInfo.classList.toggle("hidden");
+
+});
+
+// =========================================
+// 端末ID
+// =========================================
+
+let deviceId = localStorage.getItem("deviceId");
+
+function generateDeviceId() {
+
+    const chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        "abcdefghijklmnopqrstuvwxyz" +
+        "0123456789";
+
+    const randomValues =
+        new Uint32Array(16);
+
+    crypto.getRandomValues(randomValues);
+
+    return Array.from(randomValues, value =>
+        chars[value % chars.length]
+    ).join("");
+
+}
+
+if (!deviceId) {
+    deviceId = generateDeviceId();
+    localStorage.setItem("deviceId", deviceId);
+}
+
+const copyIdButton = document.getElementById("copyIdButton");
+
+copyIdButton.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(deviceId);
+
+    copyIdButton.textContent = "コピーしました！";
+
+    setTimeout(() => {
+      copyIdButton.textContent = "アンケート回答用のIDをコピーする";
+    }, 1500);
+
+  } catch (error) {
+    console.error("コピーに失敗しました:", error);
+  }
+});
+
+console.log("Device ID:", deviceId);
+
+// ダイアログ
+
+const methodDialog = document.getElementById("methodDialog");
+
+const showMethodButton =
+  document.getElementById("showMethodButton");
+
+const closeMethodButton =
+  document.getElementById("closeMethodButton");
+
+const closeMethodButton2 =
+  document.getElementById("closeMethodButton2");
+
+
+// 「実験の実施方法を見る」
+showMethodButton.addEventListener("click", () => {
+  methodDialog.showModal();
+});
+
+
+// ×ボタン
+closeMethodButton.addEventListener("click", () => {
+  methodDialog.close();
+});
+
+
+// 「閉じる」ボタン
+closeMethodButton2.addEventListener("click", () => {
+  methodDialog.close();
+});
 
 // 画面
 const startScreen = document.getElementById("startScreen");
 const countdown = document.getElementById("countdown");
 const gameScreen = document.getElementById("gameScreen");
 const resultScreen = document.getElementById("resultScreen");
+const uploadScreen = document.getElementById("uploadScreen");
 
 // ボタン
 const startButton = document.getElementById("startButton");
@@ -83,6 +291,13 @@ let rightMiss = 0;
 // CSV保存用
 const resultData = [];
 
+// =========================================
+// GAS送信用URL
+// =========================================
+
+const GAS_URL =
+    "https://script.google.com/macros/s/AKfycbz1Gef8Jx29F1iJYnmsVpnL_0g4SU1CyduzWtjV9_klMWJGna3WC-Qz-t5n9IzrM4n3RQ/exec";
+
 // 通し番号
 let trialNumber = 1;
 
@@ -90,11 +305,29 @@ let trialNumber = 1;
 // タイマー
 // =========================================
 
-let timeLimit = 1;
+let timeLimit = 50;
 
 let startTime = 0;
 
 let timerInterval = null;
+
+// =========================================
+// データ送信中のページ離脱防止
+// =========================================
+
+let isUploading = false;
+
+window.addEventListener("beforeunload", (event) => {
+
+    if (!isUploading) {
+        return;
+    }
+
+    event.preventDefault();
+
+    event.returnValue = "";
+
+});
 
 // =========================================
 // 問題表示
@@ -248,10 +481,44 @@ function startTimer() {
 }
 
 // =========================================
+// GASへ実験結果をまとめて送信
+// =========================================
+
+async function sendResultsToGAS() {
+
+    const response = await fetch(GAS_URL, {
+
+        method: "POST",
+
+        body: JSON.stringify({
+            records: resultData
+        })
+
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+
+        throw new Error(
+            data.error || "GASへの保存に失敗しました。"
+        );
+
+    }
+
+    console.log(
+        "GASへの送信完了:",
+        data.count,
+        "件"
+    );
+
+}
+
+// =========================================
 // ゲーム終了
 // =========================================
 
-function finishGame() {
+async function finishGame() {
 
     gameScreen.classList.add("hidden");
 
@@ -313,7 +580,7 @@ function finishGame() {
 
     // 表示
 
-    document.getElementById("resultParticipantName").textContent = participantName;
+    //document.getElementById("resultParticipantName").textContent = participantName;
 
     document.getElementById("resultMusicId").textContent = musicName[musicId];
 
@@ -347,6 +614,82 @@ function finishGame() {
 
     console.log(resultData);
 
+    // 送信中画面を表示
+    isUploading = true;
+    uploadScreen.classList.remove("hidden");
+
+    try {
+
+        // GASへの送信が終わるまで待つ
+        await sendResultsToGAS();
+
+        // 送信完了
+        isUploading = false;
+        console.log("データの保存が完了しました。");
+
+
+        if (conditionIndex < 4) {
+
+            // 次の条件へ
+            conditionIndex++;
+
+            localStorage.setItem(
+                "conditionIndex",
+                conditionIndex
+            );
+
+        } else {
+
+            // =====================================
+            // 5条件すべて終了
+            // =====================================
+
+            setNumber++;
+
+            conditionIndex = 0;
+
+            // 新しいセットなので、
+            // 次の5条件を新しくシャッフルする
+            conditionOrder =
+                shuffleArray(musicConditions);
+
+            localStorage.setItem(
+                "setNumber",
+                setNumber
+            );
+
+            localStorage.setItem(
+                "conditionIndex",
+                conditionIndex
+            );
+
+            localStorage.setItem(
+                "conditionOrder",
+                JSON.stringify(conditionOrder)
+            );
+
+        }
+
+        // 結果画面を表示
+        uploadScreen.classList.add("hidden");
+
+    } catch (error) {
+
+        console.error(
+            "データ送信エラー:",
+            error
+        );
+
+        isUploading = false;
+        uploadScreen.classList.add("hidden");
+
+        alert(
+            "データの保存に失敗しました。\n\n" +
+            "CSVを保存して、担当者に知らせてください。"
+        );
+
+    }
+
 }
 
 // =========================================
@@ -355,31 +698,26 @@ function finishGame() {
 
 startButton.addEventListener("click", () => {
 
-    participantName =
-        document.getElementById("participantName").value.trim();
+    //participantName = document.getElementById("participantName").value.trim();
 
-    musicId =
-        document.getElementById("musicSelect").value;
+    //musicId = document.getElementById("musicSelect").value;
 
-    setNumber =
-    Number(
-        document.getElementById("setNumber").value
-    );
+    //setNumber = Number(document.getElementById("setNumber").value);
 
-    if(participantName === ""){
+    // if(participantName === ""){
 
-        alert("被験者名を入力してください。");
-        return;
+    //     alert("被験者名を入力してください。");
+    //     return;
 
-    }
+    // }
 
-    if(setNumber < 1 || !Number.isInteger(setNumber)){
+    // if(setNumber < 1 || !Number.isInteger(setNumber)){
 
-    alert("セット番号を入力してください。");
+    // alert("セット番号を入力してください。");
 
-    return;
+    // return;
 
-    }
+    // }
 
     startCountdown();
 
@@ -430,9 +768,13 @@ function answer(side, choiceIndex){
 
     if(choiceIndex === data.correctIndex){
 
+        const correctAt = new Date();
+
         resultData.push({
 
-            participantName: participantName,
+
+            deviceId: deviceId,
+            //participantName: participantName,
             musicId: musicId,
             trial: trialNumber++,
 
@@ -476,7 +818,13 @@ function answer(side, choiceIndex){
                 ),
 
             timestamp:
-                Math.round(performance.now()-startTime)
+                Math.round(performance.now()-startTime),
+
+            // 正解した瞬間の日時
+            date:
+                correctAt.toLocaleDateString("ja-JP"),
+            time:
+                correctAt.toLocaleTimeString("ja-JP")
 
         });
 
@@ -595,6 +943,6 @@ function playMusic(){
 
 }
 
-document
-    .getElementById("downloadCSV")
-    .addEventListener("click",exportCSV);
+// document
+//     .getElementById("downloadCSV")
+//     .addEventListener("click",exportCSV);
