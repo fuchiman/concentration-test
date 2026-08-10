@@ -21,8 +21,10 @@
 
             <h1>集中力測定実験</h1>
             <h2>できるだけ速く、正確に解いてください。</h2>
+            <div id="setDisplay"></div>
+            <div id="musicDisplay"></div>
 
-            <div class="formGroup">
+            <!-- <div class="formGroup">
 
                 <label for="participantName">
                     被験者名
@@ -67,7 +69,11 @@
                     value="1"
                 >
 
-            </div>
+            </div> -->
+
+            <button id="showMethodButton" type="button">
+                実験の実施方法を見る
+            </button>
 
             <button id="startButton">
 
@@ -75,7 +81,57 @@
 
             </button>
 
+            <div class="id-container">
+                <button id="copyIdButton" type="button">アンケート回答用のIDをコピーする</button>
+            </div>
+
+            <div id="conditionInfo" class="hidden">
+                現在の音楽条件：<span id="conditionText"></span>
+            </div>
+
         </div>
+
+        <!-- 実施方法ダイアログ -->
+        <dialog id="methodDialog">
+
+        <div class="dialog-header">
+            <h2>実験の実施方法</h2>
+
+            <button
+            id="closeMethodButton"
+            class="close-button"
+            type="button"
+            aria-label="閉じる"
+            >
+            ×
+            </button>
+        </div>
+
+        <div class="dialog-content">
+
+            <ol>
+                <li>実験は、静かな場所で、座って実施してください。</li>
+                <li>イヤホンを装着してください。音量は80％以上で、毎回同じにしてください。</li>
+                <li>本番では50秒間、計算問題に答え続けます。</li>
+                <li>回答は左右交互に行ってください。</li>
+                <li>練習をしたことがない方は、こちらからしてください。<br><a href="https://fuchiman.github.io/demo-concentration-test/" target="_blank">https://fuchiman.github.io/demo-concentration-test/</a></li>
+                <li>実験中は音楽が流れます。音楽を聴きながら、普段どおり問題に答えてください。</li>
+                <li>音楽が流れない場合もありますが、それは比較のための実験です。気にせず進めてください。</li>
+                <li>実験終了後、すぐにブラウザを閉じたり、更新したりしないでください。実験結果の送信に失敗してしまうためです。</li>
+                <li>実験は、5回で1セットです。1回目が終わればページをリロードすると2回目がプレイできます。</li>
+                <li>実験と実験の合間には休憩を入れ、疲れのない状態で臨んでください。実験を1セットするのに複数日かけても構いません。</li>
+                <li>この実験では、被験者の個人名などの個人情報を収集することはありません。</li>
+            </ol>
+
+        </div>
+
+        <div class="dialog-footer">
+            <button id="closeMethodButton2" type="button">
+            閉じる
+            </button>
+        </div>
+
+        </dialog>
 
     </div>
 
@@ -157,6 +213,31 @@
 
     </div>
 
+    <!-- =========================================
+     送信中画面
+     ========================================= -->
+
+    <div id="uploadScreen" class="screen hidden">
+
+        <div class="uploadBox">
+
+            <div class="loadingSpinner"></div>
+
+            <h2>データを保存しています</h2>
+
+            <p>
+                送信中……
+            </p>
+
+            <p>
+                ブラウザを閉じたり、<br>
+                更新したりしないでください。
+            </p>
+
+        </div>
+
+    </div>
+
     <!-- 終了画面 -->
 
     <div id="resultScreen" class="hidden">
@@ -164,9 +245,9 @@
         <h2>実験終了</h2>
 
         <div id="NameAndId">
-            <h4>被験者名：
+            <!-- <h4>被験者名：
                 <span id="resultParticipantName"></span>
-            </h4>
+            </h4> -->
             <h4>音楽条件：
                 <span id="resultMusicId"></span>
             </h4>
@@ -186,6 +267,7 @@
                 <p>
                     正答数：
                     <span id="finalLeftScore"></span>
+                    問
                 </p>
 
                 <p>
@@ -228,7 +310,7 @@
             </div>
         </div>
 
-        <p>
+        <!-- <p>
 
             CSVを保存して下さい。
 
@@ -238,9 +320,12 @@
 
             CSV保存
 
-        </button>
+        </button> -->
 
     </div>
+    <button id="conditionCheckButton" type="button">
+        条件確認
+    </button>
 
     <!-- JavaScript -->
 
