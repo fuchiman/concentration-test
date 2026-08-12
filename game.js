@@ -15,17 +15,17 @@
 // 音楽条件
 const musicName = {
     A: "A",
-    B: "B",
+    // B: "B",
     C: "C",
-    D: "D",
+    // D: "D",
     silence: "無音"
 };
 
 const musicConditions = [
     "A",
-    "B",
+    // "B",
     "C",
-    "D",
+    // "D",
     "silence"
 ];
 
@@ -62,7 +62,7 @@ let conditionIndex =
 if (
     !Number.isInteger(conditionIndex) ||
     conditionIndex < 0 ||
-    conditionIndex >= 5
+    conditionIndex >= 3
 ) {
     conditionIndex = 0;
 
@@ -79,7 +79,7 @@ let conditionOrder =
 
 if (
     !Array.isArray(conditionOrder) ||
-    conditionOrder.length !== 5
+    conditionOrder.length !== 3
 ) {
 
     conditionOrder =
@@ -628,7 +628,7 @@ async function finishGame() {
         console.log("データの保存が完了しました。");
 
 
-        if (conditionIndex < 4) {
+        if (conditionIndex < 2) {
 
             // 次の条件へ
             conditionIndex++;
