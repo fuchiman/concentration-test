@@ -59,46 +59,52 @@ function shuffleArray(array) {
 let conditionIndex =
     Number(localStorage.getItem("conditionIndex"));
 
-if (
-    !Number.isInteger(conditionIndex) ||
-    conditionIndex < 0 ||
-    conditionIndex >= 3
-) {
-    conditionIndex = 0;
 
-    localStorage.setItem(
-        "conditionIndex",
-        conditionIndex
-    );
-
-    conditionOrder =
-        shuffleArray(musicConditions);
-
-    localStorage.setItem(
-        "conditionOrder",
-        JSON.stringify(conditionOrder)
-    );
-}
+// =========================================
+// 条件順を取得
+// =========================================
 
 let conditionOrder =
     JSON.parse(
         localStorage.getItem("conditionOrder")
     );
 
+
+// =========================================
+// 初回アクセス・不正な状態の場合
+// =========================================
+
 if (
+    !Number.isInteger(conditionIndex) ||
+    conditionIndex < 0 ||
+    conditionIndex >= musicConditions.length ||
     !Array.isArray(conditionOrder) ||
     conditionOrder.length !== musicConditions.length
 ) {
+
+    conditionIndex = 0;
 
     conditionOrder =
         shuffleArray(musicConditions);
 
     localStorage.setItem(
+        "conditionIndex",
+        conditionIndex
+    );
+
+    localStorage.setItem(
         "conditionOrder",
         JSON.stringify(conditionOrder)
     );
-
 }
+
+
+// =========================================
+// 現在の音楽条件
+// =========================================
+
+let musicId =
+    conditionOrder[conditionIndex];
 
 let musicId = conditionOrder[conditionIndex];
 
@@ -636,7 +642,7 @@ async function finishGame() {
         console.log("データの保存が完了しました。");
 
 
-        if (conditionIndex < 2) {
+        if (conditionIndex < musicConditions.length - 1) {
 
             // 次の条件へ
             conditionIndex++;
@@ -649,7 +655,7 @@ async function finishGame() {
         } else {
 
             // =====================================
-            // 5条件すべて終了
+            // すべての条件すべて終了
             // =====================================
 
             setNumber++;
@@ -657,7 +663,7 @@ async function finishGame() {
             conditionIndex = 0;
 
             // 新しいセットなので、
-            // 次の5条件を新しくシャッフルする
+            // 次の条件を新しくシャッフルする
             conditionOrder =
                 shuffleArray(musicConditions);
 
@@ -964,9 +970,12 @@ document.getElementById("reloadButton").addEventListener("click", () => {
 //     .getElementById("downloadCSV")
 //     .addEventListener("click",exportCSV);
 
-document
-    .getElementById("resetTestButton")
-    .addEventListener("click", () => {
+const resetTestButton =
+    document.getElementById("resetTestButton");
+
+if (resetTestButton) {
+
+    resetTestButton.addEventListener("click", () => {
 
         localStorage.removeItem("setNumber");
         localStorage.removeItem("conditionIndex");
@@ -975,4 +984,7 @@ document
         alert("進行状況をリセットしました。");
 
         location.reload();
+
     });
+
+}
