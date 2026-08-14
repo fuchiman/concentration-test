@@ -56,6 +56,15 @@ function shuffleArray(array) {
     return shuffled;
 }
 
+if(localStorage.getItem("deviceId") === "FHgS26yEMYrjqZKr") {
+    conditionIndex = 0;
+
+    localStorage.setItem(
+        "conditionIndex",
+        conditionIndex
+    );
+}
+
 let conditionIndex =
     Number(localStorage.getItem("conditionIndex"));
 
@@ -70,6 +79,14 @@ if (
         "conditionIndex",
         conditionIndex
     );
+
+    conditionOrder =
+        shuffleArray(musicConditions);
+
+    localStorage.setItem(
+        "conditionOrder",
+        JSON.stringify(conditionOrder)
+    );
 }
 
 let conditionOrder =
@@ -79,7 +96,7 @@ let conditionOrder =
 
 if (
     !Array.isArray(conditionOrder) ||
-    conditionOrder.length !== 3
+    conditionOrder.length !== musicConditions.length
 ) {
 
     conditionOrder =
@@ -588,29 +605,29 @@ async function finishGame() {
     setNumber;
 
 
-    document.getElementById("finalLeftScore")
-    .textContent = leftCorrect;
+    // document.getElementById("finalLeftScore")
+    // .textContent = leftCorrect;
 
-    document.getElementById("finalRightScore")
-    .textContent = rightCorrect;
-
-
-    document.getElementById("finalLeftReaction")
-    .textContent =
-        leftAverageReaction;
-
-    document.getElementById("finalRightReaction")
-    .textContent =
-        rightAverageReaction;
+    // document.getElementById("finalRightScore")
+    // .textContent = rightCorrect;
 
 
-    document.getElementById("finalLeftMiss")
-    .textContent =
-        leftMiss;
+    // document.getElementById("finalLeftReaction")
+    // .textContent =
+    //     leftAverageReaction;
 
-    document.getElementById("finalRightMiss")
-    .textContent =
-        rightMiss;
+    // document.getElementById("finalRightReaction")
+    // .textContent =
+    //     rightAverageReaction;
+
+
+    // document.getElementById("finalLeftMiss")
+    // .textContent =
+    //     leftMiss;
+
+    // document.getElementById("finalRightMiss")
+    // .textContent =
+    //     rightMiss;
 
     console.log(resultData);
 
@@ -672,6 +689,11 @@ async function finishGame() {
 
         // 結果画面を表示
         uploadScreen.classList.add("hidden");
+
+        // 「次の実験を開始」ボタンを表示
+        document
+            .getElementById("reloadButton")
+            .classList.remove("hidden");
 
     } catch (error) {
 
@@ -943,6 +965,23 @@ function playMusic(){
 
 }
 
+document.getElementById("reloadButton").addEventListener("click", () => {
+    location.reload();
+});
+
 // document
 //     .getElementById("downloadCSV")
 //     .addEventListener("click",exportCSV);
+
+document
+    .getElementById("resetTestButton")
+    .addEventListener("click", () => {
+
+        localStorage.removeItem("setNumber");
+        localStorage.removeItem("conditionIndex");
+        localStorage.removeItem("conditionOrder");
+
+        alert("進行状況をリセットしました。");
+
+        location.reload();
+    });
