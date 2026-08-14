@@ -1092,6 +1092,39 @@ li > a {
 
 }
 
+#reloadButton {
+    display: block;
+    margin: 30px auto 0;
+    padding: 14px 32px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: #4a6cf7;
+    color: white;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
+}
+
+#reloadButton:hover {
+    background-color: #3b5bdb;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+#reloadButton:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
 /* CSVボタン */
 
 #downloadCSV{
