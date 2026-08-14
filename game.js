@@ -56,15 +56,6 @@ function shuffleArray(array) {
     return shuffled;
 }
 
-if(localStorage.getItem("deviceId") === "FHgS26yEMYrjqZKr") {
-    conditionIndex = 0;
-
-    localStorage.setItem(
-        "conditionIndex",
-        conditionIndex
-    );
-}
-
 let conditionIndex =
     Number(localStorage.getItem("conditionIndex"));
 
