@@ -1,36 +1,36 @@
-window.onerror = function(message, source, lineno, colno, error) {
+// window.onerror = function(message, source, lineno, colno, error) {
 
-    const errorBox = document.createElement("div");
+//     const errorBox = document.createElement("div");
 
-    errorBox.style.position = "fixed";
-    errorBox.style.top = "10px";
-    errorBox.style.left = "10px";
-    errorBox.style.right = "10px";
-    errorBox.style.zIndex = "999999";
+//     errorBox.style.position = "fixed";
+//     errorBox.style.top = "10px";
+//     errorBox.style.left = "10px";
+//     errorBox.style.right = "10px";
+//     errorBox.style.zIndex = "999999";
 
-    errorBox.style.padding = "15px";
+//     errorBox.style.padding = "15px";
 
-    errorBox.style.background = "#ffdddd";
-    errorBox.style.color = "#000";
-    errorBox.style.border = "3px solid red";
+//     errorBox.style.background = "#ffdddd";
+//     errorBox.style.color = "#000";
+//     errorBox.style.border = "3px solid red";
 
-    errorBox.style.fontSize = "14px";
-    errorBox.style.fontFamily = "monospace";
+//     errorBox.style.fontSize = "14px";
+//     errorBox.style.fontFamily = "monospace";
 
-    errorBox.style.whiteSpace = "pre-wrap";
+//     errorBox.style.whiteSpace = "pre-wrap";
 
-    errorBox.textContent =
-        "JavaScript ERROR\n\n" +
-        "message: " + message + "\n" +
-        "file: " + source + "\n" +
-        "line: " + lineno + "\n" +
-        "column: " + colno + "\n\n" +
-        "error: " + error;
+//     errorBox.textContent =
+//         "JavaScript ERROR\n\n" +
+//         "message: " + message + "\n" +
+//         "file: " + source + "\n" +
+//         "line: " + lineno + "\n" +
+//         "column: " + colno + "\n\n" +
+//         "error: " + error;
 
-    document.body.appendChild(errorBox);
+//     document.body.appendChild(errorBox);
 
-    return false;
-};
+//     return false;
+// };
 // =========================================
 // game.js
 // Part1
@@ -1005,21 +1005,21 @@ document.getElementById("reloadButton").addEventListener("click", () => {
 //     .getElementById("downloadCSV")
 //     .addEventListener("click",exportCSV);
 
-const resetTestButton =
-    document.getElementById("resetTestButton");
+// const resetTestButton =
+//     document.getElementById("resetTestButton");
 
-if (resetTestButton) {
+// if (resetTestButton) {
 
-    resetTestButton.addEventListener("click", () => {
+//     resetTestButton.addEventListener("click", () => {
 
-        localStorage.removeItem("setNumber");
-        localStorage.removeItem("conditionIndex");
-        localStorage.removeItem("conditionOrder");
+//         localStorage.removeItem("setNumber");
+//         localStorage.removeItem("conditionIndex");
+//         localStorage.removeItem("conditionOrder");
 
-        alert("進行状況をリセットしました。");
+//         alert("進行状況をリセットしました。");
 
-        location.reload();
+//         location.reload();
 
-    });
+//     });
 
-}
+// }
