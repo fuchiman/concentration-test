@@ -1,3 +1,36 @@
+window.onerror = function(message, source, lineno, colno, error) {
+
+    const errorBox = document.createElement("div");
+
+    errorBox.style.position = "fixed";
+    errorBox.style.top = "10px";
+    errorBox.style.left = "10px";
+    errorBox.style.right = "10px";
+    errorBox.style.zIndex = "999999";
+
+    errorBox.style.padding = "15px";
+
+    errorBox.style.background = "#ffdddd";
+    errorBox.style.color = "#000";
+    errorBox.style.border = "3px solid red";
+
+    errorBox.style.fontSize = "14px";
+    errorBox.style.fontFamily = "monospace";
+
+    errorBox.style.whiteSpace = "pre-wrap";
+
+    errorBox.textContent =
+        "JavaScript ERROR\n\n" +
+        "message: " + message + "\n" +
+        "file: " + source + "\n" +
+        "line: " + lineno + "\n" +
+        "column: " + colno + "\n\n" +
+        "error: " + error;
+
+    document.body.appendChild(errorBox);
+
+    return false;
+};
 // =========================================
 // game.js
 // Part1
