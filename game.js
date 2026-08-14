@@ -56,12 +56,16 @@ function shuffleArray(array) {
     return shuffled;
 }
 
+// =========================================
+// 条件の現在位置
+// =========================================
+
 let conditionIndex =
     Number(localStorage.getItem("conditionIndex"));
 
 
 // =========================================
-// 条件順を取得
+// 現在のセットの条件順
 // =========================================
 
 let conditionOrder =
@@ -105,8 +109,6 @@ if (
 
 let musicId =
     conditionOrder[conditionIndex];
-
-let musicId = conditionOrder[conditionIndex];
 
 // セット番号
 let setNumber =
