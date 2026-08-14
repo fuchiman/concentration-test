@@ -13,7 +13,9 @@
 </head>
 
 <body>
-
+<button id="resetTestButton" type="button">
+    テスト用：進行状況をリセット
+</button>
     <!-- スタート画面 -->
     <div id="startScreen">
 
@@ -111,6 +113,7 @@
 
             <ol>
                 <li>実験は、静かな場所で、座って実施してください。</li>
+                <li>このページはLINEのブラウザではなく、毎回同じブラウザを用いてください。(Chrome,Safari等)</li>
                 <li>イヤホンを装着してください。音量は80％以上で、毎回同じにしてください。</li>
                 <li>本番では50秒間、計算問題に答え続けます。</li>
                 <li>回答は左右交互に行ってください。</li>
@@ -313,10 +316,15 @@
         <p>
 
             お疲れ様でした。<br>
-            休憩を取った後、リロードして次の実験に進んでください。<br>
-            5回で1セットなので、最低3回以上は実験してください。<br>
+            休憩を取った後、下のボタンを押して次の実験に進んでください。<br>
+            3回で1セットなので、最低3回以上は実験してください。<br>
             それ以上は、どれだけ実験しても構いません。<br>
         </p>
+
+            <button id="reloadButton" type="button">
+                次の実験を開始
+            </button>
+
         <p>
             まだ<a href="https://docs.google.com/forms/d/e/1FAIpQLSczUERFKLxYGvbOLijRMVyVEGtbHlfkU_5POfhrGApU8mqgOQ/viewform" target="_blank">こちらのアンケート</a>に答えていない方は、お答えください。（回答に必要なIDはリロードすると入手できます）<br>
 
